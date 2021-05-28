@@ -6,9 +6,9 @@ spec:
   parameters:
     - name: phpmyadmin_enable
       value: true
+  resources:
+    memory: 500Mi
   volume_mounts:
     - mount_path: /var/lib/mysql
       sub_path: mysql
       volume_name: vol1
-  resources:
-    memory: 500MI
