@@ -1,7 +1,7 @@
 kind: ManagedService
-name: mega-electric-mysql
+name: mysql
 spec:
-  service_name: mysql
+  service_name: mega-electric-mysql
   version: 5.7
   parameters:
     - name: phpmyadmin_enable
