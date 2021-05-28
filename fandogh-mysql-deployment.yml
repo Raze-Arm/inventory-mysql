@@ -11,4 +11,4 @@ spec:
       sub_path: mysql
       volume_name: vol1
   resources:
-    500MI
+    memory: 500MI
