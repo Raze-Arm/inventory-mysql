@@ -10,7 +10,3 @@ spec:
       value: "mnaoidwoiawnondwnwanod"
   resources:
     memory: 500Mi
-  volume_mounts:
-    - mount_path: /var/lib/mysql
-      sub_path: mysql
-      volume_name: vol1
