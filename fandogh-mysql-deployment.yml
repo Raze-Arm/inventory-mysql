@@ -6,6 +6,8 @@ spec:
   parameters:
     - name: phpmyadmin_enabled
       value: true
+    - name: mysql_root_password
+      value: ${DB_PASSWORD}
   resources:
     memory: 500Mi
   volume_mounts:
