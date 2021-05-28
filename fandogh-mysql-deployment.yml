@@ -8,5 +8,7 @@ spec:
       value: true
     - name: mysql_root_password
       value: "mnaoidwoiawnondwnwanod"
+    - name: volume_name
+      value: vol1
   resources:
     memory: 500Mi
