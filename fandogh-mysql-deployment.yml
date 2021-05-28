@@ -7,7 +7,7 @@ spec:
     - name: phpmyadmin_enabled
       value: true
     - name: mysql_root_password
-      value: ${MYSQL_PASSWORD}
+      value: ${DB_PASSWORD}
     - name: volume_name
       value: vol1
   resources:
