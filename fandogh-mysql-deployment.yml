@@ -1,10 +1,10 @@
 kind: ManagedService
-name: mysql
+name: mega-electric-mysql
 spec:
-  service_name: mega-electric-mysql
+  service_name: mysql
   version: 5.7
   parameters:
-    - name: phpmyadmin_enable
+    - name: phpmyadmin_enabled
       value: true
   resources:
     memory: 500Mi
