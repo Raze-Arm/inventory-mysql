@@ -1,0 +1,14 @@
+kind: ManagedService
+name: mega-electric-mysql
+spec:
+  service_name: mysql
+  version: 5.7
+  parameters:
+    - name: phpmyadmin_enable
+      value: true
+  volume_mounts:
+    - mount_path: /var/lib/mysql
+      sub_path: mysql
+      volume_name: vol1
+  resources:
+    500MI
