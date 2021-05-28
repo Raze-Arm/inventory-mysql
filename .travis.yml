@@ -13,7 +13,6 @@ before_install:
   - pip install fandogh-cli --upgrade
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - fandogh login --username $FANDOGH_USERNAME --password $FANDOGH_PASSWORD
-  - fandogh namespace active --name $FANDOGH_NAMESPACE
 
 
 deploy:
