@@ -2,13 +2,14 @@ kind: ManagedService
 name: mega-electric-mysql
 spec:
   service_name: mysql
-  version: 5.7
+  version: 8
   parameters:
     - name: phpmyadmin_enabled
-      value: true
+      value: false
     - name: mysql_root_password
       value: ${DB_PASSWORD}
     - name: volume_name
       value: vol1
+  port: 3306
   resources:
     memory: 500Mi
