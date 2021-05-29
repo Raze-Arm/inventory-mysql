@@ -5,7 +5,7 @@ spec:
   version: 8.0
   parameters:
     - name: phpmyadmin_enabled
-      value: true
+      value: false
     - name: mysql_root_password
       value: ${DB_PASSWORD}
     - name: volume_name
