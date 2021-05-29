@@ -5,8 +5,10 @@ spec:
 #  image_pull_policy: IfNotPresent
 #  replicas: 1
   env:
-    - MYSQL_ROOT_PASSWORD: the-secret-way-to-doing-stuff
-    - MYSQL_DATABASE: inventory
+    - name: MYSQL_ROOT_PASSWORD
+      value: the-secret-way-to-doing-stuff
+    - name: MYSQL_DATABASE
+      value: inventory
 #    - name: VERSION
 #      value: v1
   port_mapping:
