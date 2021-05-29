@@ -1,7 +1,7 @@
 kind: InternalService
 name: mega-electric-mysql
 spec:
-  image: mysql:latest
+  image: mysql
 #  image_pull_policy: IfNotPresent
 #  replicas: 1
   env:
