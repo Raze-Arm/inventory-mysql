@@ -5,4 +5,4 @@ docker push razear/mega-electric-mysql:latest
 docker push razear/mega-electric-mysql:$SHA
 #fandogh service apply -f mysql-deployment.yml -p DB_PASSWORD=the-secret-way-to-doing-stuff
 
-fandogh service deploy  --image razear/mega-electric-mysql --version $SHA --name mega-electric-mysql --internal  -p 3306 --memory 500Mi -d
+fandogh service deploy  --image razear/mega-electric-mysql --version $SHA --name mega-electric-mysql --internal  -p 3306  -d
