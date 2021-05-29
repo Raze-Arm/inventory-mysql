@@ -7,4 +7,5 @@
 fandogh managed-service deploy mysql 5.7 \
      -c service_name=mega-electric-mysql \
      -c mysql_root_password=the-secret-way-to-doing-stuff\
-     -c phpmyadmin_enabled=false
+     -c phpmyadmin_enabled=false \
+     -m 500Mi
