@@ -10,6 +10,5 @@ spec:
       value: ${DB_PASSWORD}
     - name: volume_name
       value: vol1
-  port: 3306
   resources:
     memory: 500Mi
