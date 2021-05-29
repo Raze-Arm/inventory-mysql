@@ -12,5 +12,6 @@ spec:
       value: vol1
   domains:
     - name: mega-electric-app-razar.fandogh.cloud
+    - name: www.mega-electric-app-razar.fandogh.cloud
   resources:
     memory: 500Mi
