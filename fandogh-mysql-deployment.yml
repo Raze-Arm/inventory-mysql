@@ -2,7 +2,7 @@ kind: ManagedService
 name: mega-electric-mysql
 spec:
   service_name: mysql
-  version: 8
+  version: 8.0
   parameters:
     - name: phpmyadmin_enabled
       value: false
