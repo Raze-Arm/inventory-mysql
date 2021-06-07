@@ -2,22 +2,12 @@ kind: InternalService
 name: mega-electric-mysql
 spec:
   image: razear/mega-electric-mysql:${SHA}
-#  image_pull_policy: IfNotPresent
-#  replicas: 1
-#  env:
-#    - name: MYSQL_ROOT_PASSWORD
-#      value: the-secret-way-to-doing-stuff
-#    - name: MYSQL_DATABASE
-#      value: inventory
-#    - name: VERSION
-#      value: v1
   port_mapping:
     - port: 3306
       target_port: 3306
-      # default protocol is TCP
   resources:
     memory: 500Mi
   volume_mounts:
     - mount_path: /var/lib/mysql
       sub_path: mysql
-      volume_name: vol1
+      volume_name: mysql
