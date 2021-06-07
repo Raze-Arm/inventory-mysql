@@ -7,138 +7,138 @@ use inventory;
 
 -- ////////////////////////////////////////////////////////////TABLES
 
-create   table hibernate_sequence (next_val bigint) engine=InnoDB;
+create   table IF NOT EXISTS hibernate_sequence (next_val bigint) engine=InnoDB;
 insert into hibernate_sequence values ( 1 );
 
-CREATE TABLE user_account (
-                              id BIGINT NOT NULL,
-                              creation_date TIMESTAMP,
-                              is_account_non_expired BOOLEAN,
-                              is_account_non_locked BOOLEAN,
-                              is_credentials_non_expired BOOLEAN,
-                              is_enabled BOOLEAN,
-                              modified_date TIMESTAMP,
-                              password VARCHAR(255),
-                              user_roles VARCHAR(255),
-                              username VARCHAR(255),
-                              PRIMARY KEY (id)
+CREATE TABLE IF NOT EXISTS user_account (
+                                            id BIGINT NOT NULL,
+                                            creation_date TIMESTAMP,
+                                            is_account_non_expired BOOLEAN,
+                                            is_account_non_locked BOOLEAN,
+                                            is_credentials_non_expired BOOLEAN,
+                                            is_enabled BOOLEAN,
+                                            modified_date TIMESTAMP,
+                                            password VARCHAR(255),
+                                            user_roles VARCHAR(255),
+                                            username VARCHAR(255) unique,
+                                            PRIMARY KEY (id)
 );
-CREATE TABLE supplier (
-                          id VARCHAR(36) NOT NULL,
-                          address VARCHAR(255),
-                          created_date TIMESTAMP,
-                          first_name VARCHAR(255),
-                          last_name VARCHAR(255),
-                          modified_date TIMESTAMP,
-                          PRIMARY KEY (id)
+CREATE TABLE IF NOT EXISTS supplier (
+                                        id VARCHAR(36) NOT NULL,
+                                        address VARCHAR(255),
+                                        created_date TIMESTAMP,
+                                        first_name VARCHAR(255),
+                                        last_name VARCHAR(255),
+                                        modified_date TIMESTAMP,
+                                        PRIMARY KEY (id)
 );
-CREATE TABLE activity (
-                          id BIGINT NOT NULL,
-                          created TIMESTAMP,
-                          last_updated TIMESTAMP,
-                          entity VARCHAR(255),
-                          expires VARCHAR(255),
-                          ip VARCHAR(255),
-                          parameter VARCHAR(255),
-                          request_method VARCHAR(255),
-                          response_status INTEGER,
-                          url VARCHAR(255),
-                          user_agent VARCHAR(255),
-                          user_id BIGINT,
-                          PRIMARY KEY (id),
-                          foreign key (user_id) references user_account(id)
+CREATE TABLE IF NOT EXISTS activity (
+                                        id BIGINT NOT NULL,
+                                        created TIMESTAMP,
+                                        last_updated TIMESTAMP,
+                                        entity VARCHAR(255),
+                                        expires VARCHAR(255),
+                                        ip VARCHAR(255),
+                                        parameter VARCHAR(255),
+                                        request_method VARCHAR(255),
+                                        response_status INTEGER,
+                                        url VARCHAR(255),
+                                        user_agent VARCHAR(255),
+                                        user_id BIGINT,
+                                        PRIMARY KEY (id),
+                                        foreign key (user_id) references user_account(id)
 );
-CREATE TABLE customer (
-                          id VARCHAR(36) NOT NULL,
-                          address VARCHAR(255),
-                          created_date TIMESTAMP,
-                          first_name VARCHAR(255),
-                          last_name VARCHAR(255),
-                          modified_date TIMESTAMP,
-                          PRIMARY KEY (id)
+CREATE TABLE IF NOT EXISTS customer (
+                                        id VARCHAR(36) NOT NULL,
+                                        address VARCHAR(255),
+                                        created_date TIMESTAMP,
+                                        first_name VARCHAR(255),
+                                        last_name VARCHAR(255),
+                                        modified_date TIMESTAMP,
+                                        PRIMARY KEY (id)
 );
-CREATE TABLE product (
-                         id VARCHAR(36) NOT NULL,
-                         created_date TIMESTAMP,
-                         modified_date TIMESTAMP,
-                         name VARCHAR(255),
-                         price DECIMAL(19 , 2 ),
-                         sale_price DECIMAL(19 , 2 ),
-                         description VARCHAR(255),
-                         PRIMARY KEY (id)
+CREATE TABLE IF NOT EXISTS product (
+                                       id VARCHAR(36) NOT NULL,
+                                       created_date TIMESTAMP,
+                                       modified_date TIMESTAMP,
+                                       name VARCHAR(255),
+                                       price DECIMAL(19 , 2 ),
+                                       sale_price DECIMAL(19 , 2 ),
+                                       description VARCHAR(255),
+                                       PRIMARY KEY (id)
 );
-CREATE TABLE purchase_invoice (
-                                  id VARCHAR(36) NOT NULL,
-                                  created_date TIMESTAMP,
-                                  modified_date TIMESTAMP,
-                                  supplier_id VARCHAR(36),
-                                  PRIMARY KEY (id),
-                                  foreign key (supplier_id) references supplier (id)
+CREATE TABLE IF NOT EXISTS purchase_invoice (
+                                                id VARCHAR(36) NOT NULL,
+                                                created_date TIMESTAMP,
+                                                modified_date TIMESTAMP,
+                                                supplier_id VARCHAR(36),
+                                                PRIMARY KEY (id),
+                                                foreign key (supplier_id) references supplier (id)
 );
-CREATE TABLE purchase_transaction (
-                                      id VARCHAR(36) NOT NULL,
-                                      created_date TIMESTAMP,
-                                      description VARCHAR(255),
-                                      modified_date TIMESTAMP,
-                                      price DECIMAL(19 , 2 ),
-                                      quantity BIGINT,
-                                      invoice_id VARCHAR(36),
-                                      product_id VARCHAR(36) NOT NULL,
-                                      PRIMARY KEY (id),
-                                      foreign key (invoice_id) references purchase_invoice (id),
-                                      foreign key (product_id) references product (id)
+CREATE TABLE IF NOT EXISTS purchase_transaction (
+                                                    id VARCHAR(36) NOT NULL,
+                                                    created_date TIMESTAMP,
+                                                    description VARCHAR(255),
+                                                    modified_date TIMESTAMP,
+                                                    price DECIMAL(19 , 2 ),
+                                                    quantity BIGINT,
+                                                    invoice_id VARCHAR(36),
+                                                    product_id VARCHAR(36) NOT NULL,
+                                                    PRIMARY KEY (id),
+                                                    foreign key (invoice_id) references purchase_invoice (id),
+                                                    foreign key (product_id) references product (id)
 );
-CREATE TABLE sale_invoice (
-                              id VARCHAR(36) NOT NULL,
-                              created_date TIMESTAMP,
-                              modified_date TIMESTAMP,
-                              customer_id VARCHAR(36),
-                              PRIMARY KEY (id),
-                              foreign key (customer_id) references customer (id)
+CREATE TABLE IF NOT EXISTS sale_invoice (
+                                            id VARCHAR(36) NOT NULL,
+                                            created_date TIMESTAMP,
+                                            modified_date TIMESTAMP,
+                                            customer_id VARCHAR(36),
+                                            PRIMARY KEY (id),
+                                            foreign key (customer_id) references customer (id)
 );
-CREATE TABLE sale_transaction (
-                                  id VARCHAR(36) NOT NULL,
-                                  created_date TIMESTAMP,
-                                  description VARCHAR(255),
-                                  modified_date TIMESTAMP,
-                                  price DECIMAL(19 , 2 ),
-                                  quantity BIGINT,
-                                  invoice_id VARCHAR(36),
-                                  product_id VARCHAR(36) NOT NULL,
-                                  PRIMARY KEY (id),
-                                  foreign key (invoice_id) references sale_invoice (id),
-                                  foreign key (product_id) references product (id)
+CREATE TABLE IF NOT EXISTS sale_transaction (
+                                                id VARCHAR(36) NOT NULL,
+                                                created_date TIMESTAMP,
+                                                description VARCHAR(255),
+                                                modified_date TIMESTAMP,
+                                                price DECIMAL(19 , 2 ),
+                                                quantity BIGINT,
+                                                invoice_id VARCHAR(36),
+                                                product_id VARCHAR(36) NOT NULL,
+                                                PRIMARY KEY (id),
+                                                foreign key (invoice_id) references sale_invoice (id),
+                                                foreign key (product_id) references product (id)
 );
 
 
-CREATE TABLE user_account_user_permissions (
-                                               user_account_id BIGINT NOT NULL,
-                                               user_permissions VARCHAR(255),
-                                               foreign key (user_account_id) references user_account (id)
+CREATE TABLE IF NOT EXISTS user_account_user_permissions (
+                                                             user_account_id BIGINT NOT NULL,
+                                                             user_permissions VARCHAR(255),
+                                                             foreign key (user_account_id) references user_account (id)
 );
-CREATE TABLE user_session (
-                              username VARCHAR(255) NOT NULL,
-                              token LONGTEXT,
-                              PRIMARY KEY (username)
+CREATE TABLE IF NOT EXISTS user_session (
+                                            username VARCHAR(255) NOT NULL,
+                                            token LONGTEXT,
+                                            PRIMARY KEY (username)
 );
-CREATE TABLE user_profile (
-                              id VARCHAR(36) NOT NULL,
-                              created_date TIMESTAMP,
-                              first_name VARCHAR(255),
-                              last_name VARCHAR(255),
-                              photo_path VARCHAR(255),
-                              modified_date TIMESTAMP,
-                              account_id BIGINT NOT NULL,
-                              PRIMARY KEY (id),
-                              foreign key (account_id) references user_account (id)
+CREATE TABLE IF NOT EXISTS user_profile (
+                                            id VARCHAR(36) NOT NULL,
+                                            created_date TIMESTAMP,
+                                            first_name VARCHAR(255),
+                                            last_name VARCHAR(255),
+                                            photo_path VARCHAR(255),
+                                            modified_date TIMESTAMP,
+                                            account_id BIGINT NOT NULL,
+                                            PRIMARY KEY (id),
+                                            foreign key (account_id) references user_account (id)
 );
 
 
 -- ////////////////////////////////////////////////////////////CONSTRAINTS
 
-alter table user_account add constraint UK_castjbvpeeus0r8lbpehiu0e4 unique (username);
+-- alter table user_account add constraint UK_castjbvpeeus0r8lbpehiu0e4 unique (username);
 -- alter table activity add constraint FKb0e1g6c44ampoe1ondy9t6v8w foreign key (user_id) references user_account;
-alter table user_profile add constraint UK_k3d1y1iufa28c7v4vtxsqw9aa unique (account_id);
+-- alter table user_profile add constraint UK_k3d1y1iufa28c7v4vtxsqw9aa unique (account_id);
 -- alter table purchase_invoice add constraint FKqtx4kjstn77n9v4wowt0mlxkx foreign key (supplier_id) references supplier (id);
 -- alter table purchase_transaction add constraint FKk5ila2wwhg03dmjj09xc5pikb foreign key (invoice_id) references purchase_invoice (id);
 -- alter table purchase_transaction add constraint FK850huaktm1ev5g3jefeb8qdat foreign key (product_id) references product (id);
@@ -150,11 +150,16 @@ alter table user_profile add constraint UK_k3d1y1iufa28c7v4vtxsqw9aa unique (acc
 
 
 -- ////////////////////////////////////////////////////////////INDEXES
-create index IDXkiyy7m3fwm4vo5nil9ibp5846 on customer (first_name, last_name);
-create index IDXnejv48oro0mjt6v13jl7t3l8k on supplier (first_name, last_name);
-create index IDXjmivyxk9rmgysrmsqw15lqr5b on product (name);
-create index IDXcastjbvpeeus0r8lbpehiu0e4 on user_account (username);
-create index IDXshil01lken9uud5fvqe7g1t58 on user_profile (first_name, last_name);
+-- create index IDXkiyy7m3fwm4vo5nil9ibp5846 on customer (first_name, last_name);
+ALTER TABLE customer ADD INDEX (first_name, last_name);
+-- create index IDXnejv48oro0mjt6v13jl7t3l8k on supplier (first_name, last_name);
+ALTER TABLE supplier ADD INDEX (first_name, last_name);
+-- create index IDXjmivyxk9rmgysrmsqw15lqr5b on product (name);
+ALTER TABLE product ADD INDEX (name);
+-- create index IDXcastjbvpeeus0r8lbpehiu0e4 on user_account (username);
+ALTER TABLE user_account ADD INDEX (username);
+-- create index IDXshil01lken9uud5fvqe7g1t58 on user_profile (first_name, last_name);
+ALTER TABLE user_profile ADD INDEX (first_name, last_name);
 
 -- ////////////////////////////////////////////////////////////PRODUCT_VIEW
 
