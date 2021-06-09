@@ -1,7 +1,7 @@
 
 
 
-
+CREATE DATABASE IF NOT EXISTS inventory CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 
 use inventory;
 
@@ -83,7 +83,8 @@ CREATE TABLE IF NOT EXISTS purchase_transaction (
                                                     price DECIMAL(19 , 2 ),
                                                     quantity BIGINT,
                                                     invoice_id VARCHAR(36),
-                                                    product_id VARCHAR(36) NOT NULL,
+                                                    product_id VARCHAR(36) ,
+                                                    product_name varchar(255),
                                                     PRIMARY KEY (id),
                                                     foreign key (invoice_id) references purchase_invoice (id),
                                                     foreign key (product_id) references product (id)
@@ -104,7 +105,8 @@ CREATE TABLE IF NOT EXISTS sale_transaction (
                                                 price DECIMAL(19 , 2 ),
                                                 quantity BIGINT,
                                                 invoice_id VARCHAR(36),
-                                                product_id VARCHAR(36) NOT NULL,
+                                                product_id VARCHAR(36) ,
+                                                product_name varchar(255),
                                                 PRIMARY KEY (id),
                                                 foreign key (invoice_id) references sale_invoice (id),
                                                 foreign key (product_id) references product (id)
@@ -224,7 +226,7 @@ LIMIT 100;
 CREATE OR REPLACE VIEW transaction_view AS
 (SELECT
      t.id,
-     p.name AS product_name,
+     t.product_name,
      t.price,
      t.quantity,
      t.type,
@@ -237,9 +239,4 @@ FROM
                                                *, 'sale' AS TYPE
      FROM
          sale_transaction st) AS t
-        LEFT JOIN
-    (SELECT
-         id, name
-     FROM
-         product) AS p ON t.product_id = p.id)
-LIMIT 100
+    )LIMIT 100
