@@ -4,8 +4,8 @@ spec:
   image: razear/mega-electric-mysql:${SHA}
   env:
     - name: MYSQL_ROOT_PASSWORD
-      secret: mysql-root-password
-
+      value: ${MYSQL_ROOT_PASSWORD}
+      hidden: true
   port_mapping:
     - port: 3306
       target_port: 3306
