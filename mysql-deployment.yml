@@ -15,4 +15,4 @@ spec:
   volume_mounts:
     - mount_path: /var/lib/mysql
       sub_path: mysql
-      volume_name: mysql
+      volume_name: mysql-vol

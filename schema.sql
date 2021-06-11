@@ -150,23 +150,23 @@ CREATE TABLE IF NOT EXISTS user_profile (
 -- alter table sale_transaction add constraint FKwbltmowgsigtquwnn824c20a foreign key (product_id) references product (id);
 -- alter table user_account_user_permissions add constraint FKajmdd9jsygg62yohq6fe9ppbn foreign key (user_account_id) references user_account (id);
 -- alter table user_profile add constraint FKp581a3prvwt8w63lu5s4w9jub foreign key (account_id) references user_account (id);
-# SET @dbname = DATABASE();
-# SET @tablename = "product";
-# SET @columnname = "image_available";
-# SET @preparedStatement = (SELECT IF(
-#                                              (
-#                                                  SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
-#                                                  WHERE
-#                                                      (table_name = @tablename)
-#                                                    AND (table_schema = @dbname)
-#                                                    AND (column_name = @columnname)
-#                                              ) > 0,
-#                                              "SELECT 1",
-#                                              CONCAT("ALTER TABLE ", @tablename, " ADD ", @columnname, " boolean DEFAULT false;")
-#                                      ));
-PREPARE alterIfNotExists FROM @preparedStatement;
-EXECUTE alterIfNotExists;
-DEALLOCATE PREPARE alterIfNotExists;
+-- # SET @dbname = DATABASE();
+-- # SET @tablename = "product";
+-- # SET @columnname = "image_available";
+-- # SET @preparedStatement = (SELECT IF(
+-- #                                              (
+-- #                                                  SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+-- #                                                  WHERE
+-- #                                                      (table_name = @tablename)
+-- #                                                    AND (table_schema = @dbname)
+-- #                                                    AND (column_name = @columnname)
+-- #                                              ) > 0,
+-- #                                              "SELECT 1",
+-- #                                              CONCAT("ALTER TABLE ", @tablename, " ADD ", @columnname, " boolean DEFAULT false;")
+-- #                                      ));
+-- PREPARE alterIfNotExists FROM @preparedStatement;
+-- EXECUTE alterIfNotExists;
+-- DEALLOCATE PREPARE alterIfNotExists;
 
 -- ////////////////////////////////////////////////////////////INDEXES
 -- create index IDXkiyy7m3fwm4vo5nil9ibp5846 on customer (first_name, last_name);
