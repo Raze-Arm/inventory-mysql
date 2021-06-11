@@ -181,7 +181,7 @@ ALTER TABLE user_account ADD INDEX (username);
 ALTER TABLE user_profile ADD INDEX (first_name, last_name);
 
 -- ////////////////////////////////////////////////////////////PRODUCT_VIEW
-drop view if exists product_view ;
+
 CREATE OR REPLACE VIEW product_view AS
 (SELECT
      p.id ,
@@ -211,6 +211,40 @@ FROM
      FROM
          sale_transaction st
      GROUP BY st.product_id) AS s ON p.id = s.product_id) LIMIT 100;
+
+
+
+ALTER
+    ALGORITHM=MERGE
+    VIEW product_view AS
+    (SELECT
+         p.id AS id,
+
+         p.name,
+         p.description,
+         p.price ,
+         p.sale_price ,
+         p.created_date ,
+         p.image_available ,
+
+         CAST((CASE WHEN it.quantity IS NOT NULL THEN it.quantity ELSE 0 END ) - (CASE
+                                                                                      WHEN s.quantity IS NOT NULL THEN s.quantity
+                                                                                      ELSE 0
+             END) AS UNSIGNED) AS quantity
+     FROM
+         product p
+             LEFT JOIN
+         (SELECT
+              pt.product_id, (SUM(pt.quantity)) AS quantity
+          FROM
+              purchase_transaction pt
+          GROUP BY pt.product_id) AS it ON p.id = it.product_id
+             LEFT JOIN
+         (SELECT
+              st.product_id, (SUM(st.quantity)) AS quantity
+          FROM
+              sale_transaction st
+          GROUP BY st.product_id) AS s ON p.id = s.product_id) LIMIT 100;
 
 -- ////////////////////////////////////////////////////////////INVOICE_VIEW
 CREATE OR REPLACE VIEW invoice_view AS
