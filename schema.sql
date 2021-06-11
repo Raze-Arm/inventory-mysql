@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS product (
                                        price DECIMAL(19 , 2 ),
                                        sale_price DECIMAL(19 , 2 ),
                                        description VARCHAR(255),
-                                       image_available boolean default false,
+                                       image_available bool default false,
                                        PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS purchase_invoice (
