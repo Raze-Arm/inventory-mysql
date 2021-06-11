@@ -181,7 +181,7 @@ ALTER TABLE user_account ADD INDEX (username);
 ALTER TABLE user_profile ADD INDEX (first_name, last_name);
 
 -- ////////////////////////////////////////////////////////////PRODUCT_VIEW
-
+drop view if exists product_view ;
 CREATE OR REPLACE VIEW product_view AS
 (SELECT
      p.id ,
