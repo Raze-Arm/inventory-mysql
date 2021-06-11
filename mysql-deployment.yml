@@ -11,7 +11,7 @@ spec:
       target_port: 3306
   resources:
     memory: 500Mi
-  volume_browser_enabled: true
+#  volume_browser_enabled: true
   volume_mounts:
     - mount_path: /var/lib/mysql
       sub_path: mysql
