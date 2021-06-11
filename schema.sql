@@ -150,20 +150,20 @@ CREATE TABLE IF NOT EXISTS user_profile (
 -- alter table sale_transaction add constraint FKwbltmowgsigtquwnn824c20a foreign key (product_id) references product (id);
 -- alter table user_account_user_permissions add constraint FKajmdd9jsygg62yohq6fe9ppbn foreign key (user_account_id) references user_account (id);
 -- alter table user_profile add constraint FKp581a3prvwt8w63lu5s4w9jub foreign key (account_id) references user_account (id);
-SET @dbname = DATABASE();
-SET @tablename = "product";
-SET @columnname = "image_available";
-SET @preparedStatement = (SELECT IF(
-                                             (
-                                                 SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
-                                                 WHERE
-                                                     (table_name = @tablename)
-                                                   AND (table_schema = @dbname)
-                                                   AND (column_name = @columnname)
-                                             ) > 0,
-                                             "SELECT 1",
-                                             CONCAT("ALTER TABLE ", @tablename, " ADD ", @columnname, " boolean DEFAULT false;")
-                                     ));
+# SET @dbname = DATABASE();
+# SET @tablename = "product";
+# SET @columnname = "image_available";
+# SET @preparedStatement = (SELECT IF(
+#                                              (
+#                                                  SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+#                                                  WHERE
+#                                                      (table_name = @tablename)
+#                                                    AND (table_schema = @dbname)
+#                                                    AND (column_name = @columnname)
+#                                              ) > 0,
+#                                              "SELECT 1",
+#                                              CONCAT("ALTER TABLE ", @tablename, " ADD ", @columnname, " boolean DEFAULT false;")
+#                                      ));
 PREPARE alterIfNotExists FROM @preparedStatement;
 EXECUTE alterIfNotExists;
 DEALLOCATE PREPARE alterIfNotExists;
@@ -191,6 +191,7 @@ CREATE OR REPLACE VIEW product_view AS
      p.price AS price,
      p.sale_price AS SALE_PRICE,
      p.created_date AS CREATED_DATE,
+     p.image_available ,
 
      (CASE WHEN it.quantity IS NOT NULL THEN it.quantity ELSE 0 END ) - (CASE
                                                                              WHEN s.quantity IS NOT NULL THEN s.quantity
