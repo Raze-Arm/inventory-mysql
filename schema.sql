@@ -277,7 +277,13 @@ LIMIT 1000;
 -- ////////////////////////////////////////////////////////////TRANSACTION_VIEW
 CREATE OR REPLACE VIEW transaction_view AS
 (SELECT
-     tr.*,
+     tr.id,
+     tr.product_id,
+     tr.product_name,
+     tr.price,
+     tr.quantity,
+     tr.TYPE,
+     tr.created_date,
      p.image_available
 FROM
     (SELECT
