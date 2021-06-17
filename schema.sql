@@ -210,7 +210,7 @@ FROM
          st.product_id, (SUM(st.quantity)) AS quantity
      FROM
          sale_transaction st
-     GROUP BY st.product_id) AS s ON p.id = s.product_id) LIMIT 100;
+     GROUP BY st.product_id) AS s ON p.id = s.product_id) LIMIT 1000;
 
 
 
@@ -244,7 +244,7 @@ ALTER
               st.product_id, (SUM(st.quantity)) AS quantity
           FROM
               sale_transaction st
-          GROUP BY st.product_id) AS s ON p.id = s.product_id) LIMIT 100;
+          GROUP BY st.product_id) AS s ON p.id = s.product_id) LIMIT 1000;
 
 -- ////////////////////////////////////////////////////////////INVOICE_VIEW
 CREATE OR REPLACE VIEW invoice_view AS
