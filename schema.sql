@@ -139,34 +139,6 @@ CREATE TABLE IF NOT EXISTS user_profile (
 
 -- ////////////////////////////////////////////////////////////CONSTRAINTS
 
--- alter table user_account add constraint UK_castjbvpeeus0r8lbpehiu0e4 unique (username);
--- alter table activity add constraint FKb0e1g6c44ampoe1ondy9t6v8w foreign key (user_id) references user_account;
--- alter table user_profile add constraint UK_k3d1y1iufa28c7v4vtxsqw9aa unique (account_id);
--- alter table purchase_invoice add constraint FKqtx4kjstn77n9v4wowt0mlxkx foreign key (supplier_id) references supplier (id);
--- alter table purchase_transaction add constraint FKk5ila2wwhg03dmjj09xc5pikb foreign key (invoice_id) references purchase_invoice (id);
--- alter table purchase_transaction add constraint FK850huaktm1ev5g3jefeb8qdat foreign key (product_id) references product (id);
--- alter table sale_invoice add constraint FKt1eli7jvci5frjgs50tba9p15 foreign key (customer_id) references customer (id);
--- alter table sale_transaction add constraint FK8aggg6jsmks0iklv5wq0i8wpd foreign key (invoice_id) references sale_invoice (id);
--- alter table sale_transaction add constraint FKwbltmowgsigtquwnn824c20a foreign key (product_id) references product (id);
--- alter table user_account_user_permissions add constraint FKajmdd9jsygg62yohq6fe9ppbn foreign key (user_account_id) references user_account (id);
--- alter table user_profile add constraint FKp581a3prvwt8w63lu5s4w9jub foreign key (account_id) references user_account (id);
--- # SET @dbname = DATABASE();
--- # SET @tablename = "product";
--- # SET @columnname = "image_available";
--- # SET @preparedStatement = (SELECT IF(
--- #                                              (
--- #                                                  SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
--- #                                                  WHERE
--- #                                                      (table_name = @tablename)
--- #                                                    AND (table_schema = @dbname)
--- #                                                    AND (column_name = @columnname)
--- #                                              ) > 0,
--- #                                              "SELECT 1",
--- #                                              CONCAT("ALTER TABLE ", @tablename, " ADD ", @columnname, " boolean DEFAULT false;")
--- #                                      ));
--- PREPARE alterIfNotExists FROM @preparedStatement;
--- EXECUTE alterIfNotExists;
--- DEALLOCATE PREPARE alterIfNotExists;
 
 -- ////////////////////////////////////////////////////////////INDEXES
 -- create index IDXkiyy7m3fwm4vo5nil9ibp5846 on customer (first_name, last_name);
@@ -214,37 +186,7 @@ FROM
 
 
 
-ALTER
-    ALGORITHM=MERGE
-    VIEW product_view AS
-    (SELECT
-         p.id AS id,
 
-         p.name,
-         p.description,
-         p.price ,
-         p.sale_price ,
-         p.created_date ,
-         p.image_available ,
-
-         CAST((CASE WHEN it.quantity IS NOT NULL THEN it.quantity ELSE 0 END ) - (CASE
-                                                                                      WHEN s.quantity IS NOT NULL THEN s.quantity
-                                                                                      ELSE 0
-             END) AS UNSIGNED) AS quantity
-     FROM
-         product p
-             LEFT JOIN
-         (SELECT
-              pt.product_id, (SUM(pt.quantity)) AS quantity
-          FROM
-              purchase_transaction pt
-          GROUP BY pt.product_id) AS it ON p.id = it.product_id
-             LEFT JOIN
-         (SELECT
-              st.product_id, (SUM(st.quantity)) AS quantity
-          FROM
-              sale_transaction st
-          GROUP BY st.product_id) AS s ON p.id = s.product_id) LIMIT 1000;
 
 -- ////////////////////////////////////////////////////////////INVOICE_VIEW
 CREATE OR REPLACE VIEW invoice_view AS
