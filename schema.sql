@@ -10,6 +10,10 @@ use inventory;
 create   table IF NOT EXISTS hibernate_sequence (next_val bigint) engine=InnoDB;
 insert into hibernate_sequence values ( 1 );
 
+create table confirmation_token_sequence (next_val bigint) engine=InnoDB;
+insert into confirmation_token_sequence values ( 1 );
+
+
 CREATE TABLE IF NOT EXISTS user_account (
                                             id BIGINT NOT NULL,
                                             creation_date TIMESTAMP,
@@ -129,13 +133,24 @@ CREATE TABLE IF NOT EXISTS user_profile (
                                             created_date TIMESTAMP,
                                             first_name VARCHAR(255),
                                             last_name VARCHAR(255),
-                                            photo_path VARCHAR(255),
+                                            email VARCHAR(255),
+                                            image_available bool default false,
                                             modified_date TIMESTAMP,
                                             account_id BIGINT NOT NULL,
                                             PRIMARY KEY (id),
                                             foreign key (account_id) references user_account (id)
 );
 
+CREATE TABLE IF NOT EXISTS confirmation_token (
+                                                  id BIGINT NOT NULL,
+                                                  confirm_at TIMESTAMP,
+                                                  created_date TIMESTAMP NOT NULL,
+                                                  expires_at TIMESTAMP NOT NULL,
+                                                  token VARCHAR(255) NOT NULL,
+                                                  user_profile_id VARCHAR(36) NOT NULL,
+                                                  PRIMARY KEY (id),
+                                                  FOREIGN KEY  (user_profile_id) REFERENCES user_profile (id)
+);
 
 -- ////////////////////////////////////////////////////////////CONSTRAINTS
 
@@ -151,6 +166,7 @@ ALTER TABLE product ADD INDEX (name);
 ALTER TABLE user_account ADD INDEX (username);
 -- create index IDXshil01lken9uud5fvqe7g1t58 on user_profile (first_name, last_name);
 ALTER TABLE user_profile ADD INDEX (first_name, last_name);
+ALTER TABLE confirmation_token ADD INDEX (token);
 
 -- ////////////////////////////////////////////////////////////PRODUCT_VIEW
 
